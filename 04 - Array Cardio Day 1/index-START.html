@@ -38,29 +38,74 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let born = inventors.filter(item=> (item.year>=1500 && item.year<1600))
+    // console.table logs amatrix of results better than console.log!
+    console.table(born)
 
-    // Array.prototype.map()
+    // Array.prototype.map() - creates a new array from an existing array 
+    // but returned array WILL BE OF THE SAME LENGTH
     // 2. Give us an array of the inventors first and last names
-
+    let names = inventors.map(item=>({
+      firstName: item.first,
+      lastName: item.last
+    }))
+    console.table(names)
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
-
+    // sort must have function and return!
+    let sortdByAge = inventors.sort(function(a,b){return b.year-a.year})
+    console.table(sortdByAge)
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
-
+    let totalLived = inventors.reduce((total,item)=>total+=(item.passed-item.year),0)
+    console.table(totalLived)
     // 5. Sort the inventors by years lived
-
+    let yearsLived = inventors.map(item => ({
+                      first:item.first,
+                      last:item.last,
+                      lived:item.passed-item.year}))
+    // sort descending .sort(function(a,b){return b.property-a.propery})
+    yearsLived.sort(function(a,b){return b.lived-a.lived})
+    console.table(yearsLived)
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
-
+    
+    // let arr =[]
+    // select all links (a) under .mw-category group a 
+    // loop over each link and get text content and load into array
+    // document.querySelectorAll('.mw-category-group a').forEach(item=>{
+    // arr.push(item.textContent)})
+    // filter for de 
+    // arr.filter(item=>item.includes('de'))
+    
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+    let g = people.sort(function(d,e){
+      // splits names into 2 seperate variables by [var1,var2] surname,firstname
+      let [d_last,d_first] = d.split(', ')
+      let [e_last,e_first] = e.split(', ')
+      // compares surnames (d and e)
+      // d_last (surname1) > e_last (surname2) ? 1 : -1 = ascending order 
+      // d_last (surname1) > e_last (surname2) ? -1 : 1 = desscending order 
+      // if d_last > e_last ?(if true) 1 :(else) -1 
+      return d_last > e_last ? 1 : -1
+    })
+    console.log(g)
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    let transport = data.reduce(function(obj,item){
+      // creates a new transport key in bank object if no key in blank object
+      if (!obj[item]){
+        obj[item] =0
+      } 
+      // increments object[item] as reduce goes through array
+      obj[item]++
+      return obj
+    // starts with a blank object instead of a 0
+    },{})
+    console.table(transport)
   </script>
 </body>
 </html>
